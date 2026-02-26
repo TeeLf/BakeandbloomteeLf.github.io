@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>La Miche — Artisan Bakery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #fdf6ed;
+      --brown:   #3b2a1a;
+      --caramel: #c07c3a;
+      --tan:     #e8d5b7;
+      --soft:    #f5ebe0;
+      --text:    #4a3728;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(253, 246, 237, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--tan);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 4rem;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--brown);
+      text-decoration: none; letter-spacing: 0.02em;
+    }
+    .logo span { color: var(--caramel); font-style: italic; }
+
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav a {
+      color: var(--text); text-decoration: none;
+      font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--caramel); }
+
+    .nav-order {
+      background: var(--caramel); color: #fff !important;
+      padding: 0.55rem 1.4rem; border-radius: 30px;
+    }
+    .nav-order:hover { background: #a8662e !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--soft);
+      display: flex; align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* Decorative circles */
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute; border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::before {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(192,124,58,0.12), transparent 70%);
+      top: -100px; right: -100px;
+    }
+    .hero::after {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(192,124,58,0.08), transparent 70%);
+      bottom: 0; left: 10%;
+    }
+
+    .hero-content { max-width: 620px; position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--tan); color: var(--brown);
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      color: var(--brown); line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { color: var(--caramel); font-style: italic; }
+
+    .hero p {
+      font-size: 1.05rem; font-weight: 300; line-height: 1.8;
+      color: #7a5c46; max-width: 480px; margin-bottom: 2.5rem;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      padding: 0.9rem 2rem; border-radius: 30px;
+      font-weight: 700; font-size: 0.88rem;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.25s;
+      display: inline-block; cursor: pointer; border: none;
+    }
+    .btn-fill { background: var(--caramel); color: #fff; }
+    .btn-fill:hover { background: #a8662e; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(192,124,58,0.35); }
+    .btn-outline { border: 2px solid var(--brown); color: var(--brown); }
+    .btn-outline:hover { background: var(--brown); color: #fff; transform: translateY(-2px); }
+
+    .hero-visual {
+      position: absolute; right: 4rem; top: 50%;
+      transform: translateY(-50%);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+
+    .hero-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(59,42,26,0.08);
+      animation: floatCard 3s ease-in-out infinite alternate;
+    }
+    .hero-card:nth-child(2) { animation-delay: 0.5s; margin-top: 2rem; }
+    .hero-card:nth-child(3) { animation-delay: 1s; }
+    .hero-card:nth-child(4) { animation-delay: 1.5s; margin-top: 2rem; }
+
+    @keyframes floatCard {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-8px); }
+    }
+
+    .hero-card .emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .hero-card p { font-size: 0.8rem; font-weight: 700; color: var(--brown); }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 6rem 4rem; }
+
+    .section-tag {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--caramel); margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--brown); line-height: 1.2; margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 0.95rem; font-weight: 300;
+      color: #7a5c46; line-height: 1.75; max-width: 500px;
+    }
+
+    /* ── MENU ── */
+    #menu { background: #fff; }
+
+    .menu-header {
+      text-align: center; margin-bottom: 3.5rem;
+    }
+    .menu-header .section-sub { margin: 0 auto; }
+
+    .menu-tabs {
+      display: flex; justify-content: center; gap: 0.5rem;
+      margin-bottom: 3rem; flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.4rem; border-radius: 30px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border: 2px solid var(--tan); background: transparent;
+      color: var(--text); cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--caramel); color: #fff; border-color: var(--caramel);
+    }
+
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+
+    .menu-item {
+      background: var(--cream); border-radius: 12px;
+      padding: 2rem; transition: transform 0.25s, box-shadow 0.25s;
+      display: none;
+    }
+    .menu-item.visible { display: block; }
+    .menu-item:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(59,42,26,0.1); }
+
+    .item-emoji { font-size: 2.8rem; margin-bottom: 1rem; }
+    .item-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--brown); margin-bottom: 0.4rem;
+    }
+    .item-desc {
+      font-size: 0.85rem; font-weight: 300;
+      color: #7a5c46; line-height: 1.65; margin-bottom: 1rem;
+    }
+    .item-footer { display: flex; justify-content: space-between; align-items: center; }
+    .item-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--caramel); font-weight: 700;
+    }
+    .add-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--caramel); color: #fff;
+      border: none; font-size: 1.3rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .add-btn:hover { background: #a8662e; transform: scale(1.15); }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+
+    .about-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+
+    .about-tile {
+      border-radius: 12px; overflow: hidden;
+      background: var(--tan);
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+    }
+    .about-tile:nth-child(2) { margin-top: 2rem; background: var(--soft); }
+    .about-tile:nth-child(3) { background: var(--soft); }
+    .about-tile:nth-child(4) { margin-top: -2rem; background: var(--tan); }
+
+    .about-text .section-title { margin-bottom: 1.25rem; }
+    .about-text p {
+      font-size: 0.95rem; font-weight: 300;
+      color: #7a5c46; line-height: 1.8; margin-bottom: 1.5rem;
+    }
+
+    .about-stats {
+      display: flex; gap: 2.5rem; margin-top: 2.5rem;
+    }
+    .stat-box { text-align: left; }
+    .stat-box .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--caramel); font-weight: 700;
+    }
+    .stat-box .lbl {
+      font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #9a7a62;
+    }
+
+    /* ── HOURS ── */
+    #hours { background: var(--brown); color: var(--cream); text-align: center; }
+
+    #hours .section-tag { color: var(--caramel); }
+    #hours .section-title { color: var(--cream); }
+
+    .hours-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.1);
+      max-width: 700px; margin: 3rem auto 0;
+      border-radius: 12px; overflow: hidden;
+    }
+
+    .hour-block {
+      background: rgba(255,255,255,0.04);
+      padding: 2rem; transition: background 0.2s;
+    }
+    .hour-block:hover { background: rgba(255,255,255,0.08); }
+
+    .hour-day {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--caramel); margin-bottom: 0.5rem;
+    }
+    .hour-time {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--cream);
+    }
+
+    .location-bar {
+      margin-top: 3rem;
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: rgba(255,255,255,0.07); padding: 1rem 2rem;
+      border-radius: 30px; font-size: 0.9rem;
+      color: rgba(253,246,237,0.75);
+    }
+    .location-bar span { font-size: 1.2rem; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--soft); }
+
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: start;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    input, textarea, select {
+      width: 100%; padding: 0.9rem 1.2rem;
+      border: 2px solid var(--tan); border-radius: 8px;
+      background: #fff; font-family: 'Lato', sans-serif;
+      font-size: 0.9rem; color: var(--text);
+      transition: border-color 0.2s; outline: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--caramel); }
+    textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      background: var(--caramel); color: #fff;
+      padding: 1rem; border-radius: 30px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border: none; cursor: pointer; width: 100%;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { background: #a8662e; transform: translateY(-2px); }
+
+    .contact-info { padding-top: 0.5rem; }
+    .contact-info .section-title { margin-bottom: 1rem; }
+    .contact-info p {
+      font-size: 0.95rem; font-weight: 300;
+      color: #7a5c46; line-height: 1.8; margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .contact-detail .icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--tan);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-detail .info-text strong {
+      display: block; font-size: 0.78rem;
+      font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--caramel);
+      margin-bottom: 0.2rem;
+    }
+    .contact-detail .info-text span {
+      font-size: 0.9rem; color: var(--text);
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--brown); color: var(--cream);
+      padding: 1rem 1.5rem; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 500;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.35s ease; z-index: 999;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── CART BADGE ── */
+    .cart-indicator {
+      position: fixed; bottom: 2rem; left: 2rem;
+      background: var(--caramel); color: #fff;
+      padding: 0.85rem 1.5rem; border-radius: 30px;
+      font-size: 0.88rem; font-weight: 700;
+      box-shadow: 0 6px 20px rgba(192,124,58,0.4);
+      display: none; align-items: center; gap: 0.6rem;
+      cursor: pointer; z-index: 999;
+      transition: transform 0.2s;
+    }
+    .cart-indicator:hover { transform: translateY(-3px); }
+    .cart-indicator.visible { display: flex; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown);
+      color: rgba(253,246,237,0.55);
+      text-align: center; padding: 2rem;
+      font-size: 0.82rem;
+    }
+    footer strong { color: var(--caramel); }
+
+    /* ── FADE IN ── */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 4rem; }
+      .hero-visual { display: none; }
+      .menu-grid { grid-template-columns: 1fr !important; }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-visual { display: none; }
+      .hours-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">La <span>Miche</span></a>
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#hours">Hours</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="nav-order">Order Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🌾 Est. 2009 — Handmade Daily</div>
+      <h1>Baked with<br><em>love,</em> served<br>with warmth.</h1>
+      <p>Artisan breads, pastries, and cakes crafted from scratch every morning using the finest local ingredients. Your neighbourhood bakery since 2009.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-fill">See Our Menu</a>
+        <a href="#contact" class="btn btn-outline">Place an Order</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="emoji">🥐</div>
+        <p>Croissant</p>
+      </div>
+      <div class="hero-card">
+        <div class="emoji">🍞</div>
+        <p>Sourdough</p>
+      </div>
+      <div class="hero-card">
+        <div class="emoji">🎂</div>
+        <p>Cakes</p>
+      </div>
+      <div class="hero-card">
+        <div class="emoji">🍩</div>
+        <p>Pastries</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="menu-header fade-in">
+      <div class="section-tag">Fresh Every Morning</div>
+      <h2 class="section-title">Our Menu</h2>
+      <p class="section-sub">Everything is baked fresh before 6am. What you see is what just came out of the oven.</p>
+    </div>
+
+    <div class="menu-grid fade-in" id="menuGrid" style="grid-template-columns: repeat(3,1fr); max-width: 900px; margin: 0 auto;">
+
+      <div class="menu-item visible" data-category="cakes">
+        <div class="item-emoji">🍰</div>
+        <div class="item-name">Vanilla Cake</div>
+        <div class="item-desc">Light, fluffy, and fragrant. Made with pure vanilla bean and topped with silky buttercream frosting.</div>
+        <div class="item-footer">
+          <span class="item-price">$0.50</span>
+          <button class="add-btn" title="Add to order">+</button>
+        </div>
+      </div>
+
+      <div class="menu-item visible" data-category="cakes">
+        <div class="item-emoji">🎂</div>
+        <div class="item-name">Marble Cake</div>
+        <div class="item-desc">A beautiful swirl of vanilla and chocolate batter, moist and rich with every single bite.</div>
+        <div class="item-footer">
+          <span class="item-price">$0.50</span>
+          <button class="add-btn" title="Add to order">+</button>
+        </div>
+      </div>
+
+      <div class="menu-item visible" data-category="cakes">
+        <div class="item-emoji">🥕</div>
+        <div class="item-name">Carrot Cake</div>
+        <div class="item-desc">Warmly spiced with cinnamon and nutmeg, loaded with fresh carrots and crowned with cream cheese frosting.</div>
+        <div class="item-footer">
+          <span class="item-price">$0.50</span>
+          <button class="add-btn" title="Add to order">+</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-visual fade-in">
+      <div class="about-tile">🌾</div>
+      <div class="about-tile">🧈</div>
+      <div class="about-tile">🔥</div>
+      <div class="about-tile">🍋</div>
+    </div>
+    <div class="about-text fade-in">
+      <div class="section-tag">Our Story</div>
+      <h2 class="section-title">Baked the honest way, every single day.</h2>
+      <p>La Miche was born from a simple obsession: making bread that actually tastes like bread. No improvers, no shortcuts — just flour, water, salt, and time.</p>
+      <p>Our head baker, Margot, trained in Lyon before bringing her craft back home. Every loaf, every pastry, every tart is made by hand, in small batches, before sunrise.</p>
+      <a href="#contact" class="btn btn-fill">Come visit us</a>
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="num">15+</div>
+          <div class="lbl">Years Baking</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">40+</div>
+          <div class="lbl">Items Daily</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">100%</div>
+          <div class="lbl">Local Flour</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS -->
+  <section id="hours">
+    <div class="fade-in">
+      <div class="section-tag">Come See Us</div>
+      <h2 class="section-title">Opening Hours</h2>
+    </div>
+    <div class="hours-grid fade-in">
+      <div class="hour-block">
+        <div class="hour-day">Mon – Fri</div>
+        <div class="hour-time">7:00 am – 6:00 pm</div>
+      </div>
+      <div class="hour-block">
+        <div class="hour-day">Saturday</div>
+        <div class="hour-time">7:00 am – 4:00 pm</div>
+      </div>
+      <div class="hour-block">
+        <div class="hour-day">Sunday</div>
+        <div class="hour-time">8:00 am – 2:00 pm</div>
+      </div>
+    </div>
+    <div class="location-bar fade-in">
+      <span>📍</span> 42 Millbrook Lane, The Village — 5 min walk from the station
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-info fade-in">
+        <div class="section-tag">Get in Touch</div>
+        <h2 class="section-title">Place an Order<br>or Say Hello</h2>
+        <p>Custom cakes, bulk bread orders, wedding catering — we love special requests. Drop us a message and we'll get back to you within 24 hours.</p>
+        <div class="contact-detail">
+          <div class="icon">📞</div>
+          <div class="info-text">
+            <strong>Phone</strong>
+            <span>(555) 012-3456</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="icon">✉️</div>
+          <div class="info-text">
+            <strong>Email</strong>
+            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="036b666f6f6c436f626e6a606b662d606c6e">[email&#160;protected]</a></span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="icon">📍</div>
+          <div class="info-text">
+            <strong>Address</strong>
+            <span>42 Millbrook Lane, The Village</span>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form fade-in" id="contactForm">
+        <div class="form-row">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Email Address" required />
+        </div>
+        <select>
+          <option value="" disabled selected>What can we help with?</option>
+          <option>Custom Cake Order</option>
+          <option>Bulk Bread Order</option>
+          <option>Catering Enquiry</option>
+          <option>General Question</option>
+        </select>
+        <textarea placeholder="Tell us more…"></textarea>
+        <button type="submit" class="form-submit">Send Message 🍞</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <strong>La Miche Bakery</strong> — Handmade with love every morning 🥐</p>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">🛒 <span id="toastText">Added to your order!</span></div>
+
+  <!-- CART -->
+  <div class="cart-indicator" id="cartBar" onclick="scrollToContact()">
+    🛒 <span id="cartCount">0 items — $0.00</span> · Place Order
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ── Scroll Fade-In
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Add to Order
+    let cartCount = 0;
+    let cartTotal = 0;
+    const PRICE = 0.50;
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toastText');
+    const cartBar = document.getElementById('cartBar');
+    const cartCountEl = document.getElementById('cartCount');
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.closest('.menu-item').querySelector('.item-name').textContent;
+        cartCount++;
+        cartTotal = cartCount * PRICE;
+        cartCountEl.textContent = `${cartCount} item${cartCount > 1 ? 's' : ''} — $${cartTotal.toFixed(2)}`;
+        cartBar.classList.add('visible');
+        toastText.textContent = `🎂 ${name} added! Total: $${cartTotal.toFixed(2)}`;
+        toast.classList.add('show');
+        clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+      });
+    });
+
+    function scrollToContact() {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ── Contact Form
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      toastText.textContent = '✅ Message sent! We\'ll be in touc
